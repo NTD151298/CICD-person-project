@@ -1,7 +1,7 @@
 # SSH 
 ssh -p 2001 duongtn1512@127.0.0.1 
 ssh -p 1000 a123@127.0.0.1 / pass 123
-ssh -i key/key5.pem ubuntu@18.142.120.242
+ssh -i key/key5.pem ubuntu@18.141.10.186
 
 # Git
 git remote -v

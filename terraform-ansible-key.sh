@@ -1,7 +1,11 @@
+#!/bin/bash
+
+sudo apt-get update
+
 # Key permision
-sudo chmod 006 Jenkins-CI/key/key5.pem
-sudo chmod 006 Control-plane-CD/key/key5.pem
-sudo chmod 006 Worker-node-CD/key/key5.pem
+sudo chmod 600 Jenkins-CI/key/key5.pem
+sudo chmod 600 Control-plane-CD/key/key5.pem
+sudo chmod 600 Worker-node-CD/key/key5.pem
 
 # Terraform install
 sudo apt update 
@@ -22,7 +26,9 @@ sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt -y install ansible
 
 # Validate install
+echo "terraform verison"
 terraform version 
+echo "ansible --version"
 ansible --version
 
 

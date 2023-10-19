@@ -62,7 +62,7 @@
     # Ngủ khoảng 60s
     - name: Wait for jenkins container run up
       shell: |
-        sleep 60
+        sleep 15
 
     # Lấy ra mật khẩu cảu jenkins container
     - name: Get Jenkins Password
