@@ -1,6 +1,6 @@
 # SSH 
 ssh -p 2001 duongtn1512@127.0.0.1 
-ssh -p 2000 a123@127.0.0.1 / pass 123
+ssh -p 1000 a123@127.0.0.1 / pass 123
 ssh -i key/key5.pem ubuntu@18.142.120.242
 
 # Git
@@ -19,7 +19,7 @@ git remote add origin https://github.com/NTD151298/A-jenkins-full-CICD.git
 # Git log
 git fetch origin
 git pull origin main --allow-unrelated-histories
-git add . && git commit -m "123"
+git add . ; git commit -m "123"
 git push origin main
 git log --graph
 
@@ -43,3 +43,6 @@ sudo apt install ansible
 ansible --version
 sudo ansible-playbook ansible/playbook/install-nginx.yml 
 sudo ansible lap -m ping 
+
+Control-plane-CD
+Worker-node-CD
