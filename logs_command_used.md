@@ -1,5 +1,6 @@
 # SSH 
 ssh -p 2001 duongtn1512@127.0.0.1 
+ssh -p 2000 a123@127.0.0.1 / pass 123
 ssh -i key/key5.pem ubuntu@18.142.120.242
 
 # Git

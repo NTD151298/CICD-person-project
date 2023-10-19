@@ -4,7 +4,7 @@ resource "local_file" "ansible_inventory" {
   content  = <<-EOT
     [lap]
     %{for ip in aws_instance.main.*.public_ip~} 
-    ${ip} ansible_host=${ip} ansible_user=${var.ansible_user} ansible_ssh_private_key_file=${var.ansible_wsl_private_key_path} ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_connection=ssh 
+    ${ip} ansible_host=${ip} ansible_user=${var.ansible_user} ansible_ssh_private_key_file=${var.ansible_ssh_private_key_file} ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_connection=ssh 
     %{endfor~}
   EOT
 }
@@ -15,8 +15,9 @@ resource "null_resource" "playbook_exec" {
   }
   provisioner "local-exec" {
     command = <<EOF
-      ansible-playbook ${var.ansible_command} -i ${var.ansible_wsl_host_path}
+      ansible-playbook ${var.ansible_command} -i ${var.ansible_host_path}
       EOF
   }
   depends_on = [aws_instance.main, local_file.ansible_inventory]
 }
+
