@@ -1,0 +1,74 @@
+---
+- name: Install Common
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    # Cài đặt docker engine, cấu hình và cấp quyền chạy docker
+    - name: Install Container Engine
+      shell: |
+        sudo apt-get update
+        sudo apt-get install -y ca-certificates curl gnupg lsb-release
+        curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+        sudo apt-get install docker.io docker-compose -y
+        systemctl enable docker.service
+        systemctl start docker.service
+
+        cat <<EOF | sudo tee /etc/docker/daemon.json
+        {
+          "exec-opts": ["native.cgroupdriver=systemd"],
+          "log-driver": "json-file",
+          "log-opts": {
+            "max-size": "100m"
+          },
+          "storage-driver": "overlay2"
+        }
+        EOF
+        sudo systemctl enable docker
+        sudo systemctl daemon-reload
+        sudo systemctl restart docker
+        sudo chmod 777 /var/run/docker.sock
+
+    # Tạo docker compose file sẽ deploy jenkins container
+    - name: Create Docker Compose file
+      shell: |
+        echo '
+        version: "3"
+
+        services:
+          jenkins:
+            image: duongtn1512/jenkins_docker:v1
+            container_name: jenkins
+            ports:
+              - "8080:8080"
+              - "50000:50000"
+
+            volumes:
+              - jenkins_home:/var/jenkins_home
+              - /var/run/docker.sock:/var/run/docker.sock
+              - /usr/bin/docker:/usr/bin/docker
+
+        volumes:
+          jenkins_home:
+        ' > /home/ubuntu/compose.yaml
+
+    # Chạy jenkins container bằng cái file docker compoes được viết trước đó
+    - name: Run jenkins container
+      shell: |
+        docker-compose -f /home/ubuntu/compose.yaml up -d
+
+    # Ngủ khoảng 60s
+    - name: Wait for jenkins container run up
+      shell: |
+        sleep 60
+
+    # Lấy ra mật khẩu cảu jenkins container
+    - name: Get Jenkins Password
+      command: docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+      register: command_output
+
+    # In ra mật khẩu qua màn hình terraform kích hoạt ansible
+    - debug:
+        var: command_output.stdout_lines # In ra mật khẩu Jenkins
