@@ -2,10 +2,11 @@
 resource "local_file" "ansible_inventory" {
   filename = var.ansible_host_path
   content  = <<-EOT
-    [lap]
-    %{for ip in aws_instance.main.*.public_ip~} 
-    ${ip} ansible_host=${ip} ansible_user=${var.ansible_user} ansible_ssh_private_key_file=${var.ansible_ssh_private_key_file} ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_connection=ssh 
+    [control_plane]
+    %{for ip in aws_instance.control_plane.*.public_ip~} 
+    ${ip} ansible_host=${ip} ansible_user=${var.ansible_user} ansible_ssh_private_key_file=${var.control_plane_ssh_private_key_file} ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_connection=ssh 
     %{endfor~}
+    
   EOT
 }
 # Kích hoạt cho ansible chạy playbook với host ip mới lấy được
@@ -18,6 +19,6 @@ resource "null_resource" "playbook_exec" {
       ansible-playbook ${var.ansible_command} -i ${var.ansible_host_path}
       EOF
   }
-  depends_on = [aws_instance.main, local_file.ansible_inventory]
+  depends_on = [aws_instance.control_plane, local_file.ansible_inventory]
 }
 

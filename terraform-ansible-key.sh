@@ -3,9 +3,9 @@
 sudo apt-get update
 
 # Key permision
-sudo chmod 600 Jenkins-CI/key/key5.pem
-sudo chmod 600 Control-plane-CD/key/key5.pem
-sudo chmod 600 Worker-node-CD/key/key5.pem
+sudo chmod 600 CICD-server/key/key1.pem
+sudo chmod 600 CICD-server/key/key5.pem
+sudo chmod 600 CICD-server/key/key8.pem
 
 # Terraform install
 sudo apt update 
