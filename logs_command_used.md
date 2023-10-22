@@ -2,7 +2,7 @@
 ssh -p 2001 duongtn1512@127.0.0.1 
 ssh -p 1000 a123@127.0.0.1 / pass 123
 ssh -i key/key5.pem ubuntu@54.169.45.89
-ssh -i key/key8.pem ubuntu@52.221.181.80
+ssh -i key/key8.pem ubuntu@13.214.39.35
 
 
 # Git
@@ -57,11 +57,13 @@ sudo kubectl get componentstatuses --kubeconfig=/etc/kubernetes/admin.conf
 sudo kubectl get pods -n kube-system --kubeconfig=/etc/kubernetes/admin.conf
 sudo kubectl get pods -n kube-system -l k8s-app=kube-dns
 sudo kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise-address=$CONTROLPLANE_PRIVATE_IP --pod-network-cidr=192.168.0.0/16
-
 sudo -i
 swapoff -a
 exit
 strace -eopenat kubectl version
+# kubeapi server
+ps aux | grep kube-apiserver
+sudo cat /etc/kubernetes/manifests/kube-apiserver.yaml
 
 # Manh Tuong doc
 https://sweetcode.io/how-to-deploy-an-application-to-kubernetes-cluster-using-jenkins-ci-cd-pipeline/?fbclid=IwAR2btd9klHjBUmcCF8ByIZ-xgcthnQ4OZGILW-NtJIvSEtq-rxKs5wLdB0s
