@@ -2,7 +2,7 @@
 ssh -p 2001 duongtn1512@127.0.0.1 
 ssh -p 1000 a123@127.0.0.1 / pass 123
 ssh -i key/key5.pem ubuntu@54.169.45.89
-ssh -i key/key8.pem ubuntu@54.169.99.110
+ssh -i key/key8.pem ubuntu@52.221.181.80
 
 
 # Git
@@ -46,5 +46,26 @@ ansible --version
 sudo ansible-playbook ansible/playbook/install-nginx.yml 
 sudo ansible lap -m ping 
 
+ansible-playbook -i your_inventory_file playbook.yaml --start-at-task="Copy file test init.sh to Install controlplane components"
+
 Control-plane-CD
 Worker-node-CD
+
+# K8s
+sudo kubectl get componentstatuses --kubeconfig=/etc/kubernetes/admin.conf
+# check coreDNS
+sudo kubectl get pods -n kube-system --kubeconfig=/etc/kubernetes/admin.conf
+sudo kubectl get pods -n kube-system -l k8s-app=kube-dns
+sudo kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise-address=$CONTROLPLANE_PRIVATE_IP --pod-network-cidr=192.168.0.0/16
+
+sudo -i
+swapoff -a
+exit
+strace -eopenat kubectl version
+
+# Manh Tuong doc
+https://sweetcode.io/how-to-deploy-an-application-to-kubernetes-cluster-using-jenkins-ci-cd-pipeline/?fbclid=IwAR2btd9klHjBUmcCF8ByIZ-xgcthnQ4OZGILW-NtJIvSEtq-rxKs5wLdB0s
+https://dijeesh.github.io/posts/Setting-up-single-node-k8s-in-aws/
+https://xuanthulab.net/gioi-thieu-va-cai-dat-kubernetes-cluster.html?fbclid=IwAR2-UGkRk4evA_7S2fcXfXcS7aluxMcVbuI6XQjxicVdjw6ZUQeswjPsg38
+https://www.youtube.com/watch?v=vBoOXP6BkDI
+

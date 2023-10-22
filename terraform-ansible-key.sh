@@ -6,6 +6,7 @@ sudo apt-get update
 sudo chmod 600 CICD-server/key/key1.pem
 sudo chmod 600 CICD-server/key/key5.pem
 sudo chmod 600 CICD-server/key/key8.pem
+sudo chmod 600 Kube-test/key/key8.pem
 
 # Terraform install
 sudo apt update 
