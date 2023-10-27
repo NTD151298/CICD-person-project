@@ -72,12 +72,13 @@
     # In ra mật khẩu qua màn hình terraform kích hoạt ansible
     - debug:
         var: command_output.stdout_lines # In ra mật khẩu Jenkins
-
+  # Cài đặt kubeadm kubelet và kubectl cho control plane và worker node machine
 - name: Install Common for master-node and worker node
   hosts: control_plane:worker_node
   gather_facts: true
   become: true
   tasks:
+    # Config common setting
     - name: Setting common configuration for all nodes
       shell: |
         cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -90,7 +91,7 @@
         EOF
 
         sudo sysctl --system
-
+      # Cài docker
     - name: Install Container Engine
       shell: |
         sudo apt-get update
@@ -115,7 +116,7 @@
         sudo systemctl enable docker
         sudo systemctl daemon-reload
         sudo systemctl restart docker
-
+      # Cài kubeadl kubectl và kubelet
     - name: Install Kubeadm, Kubectl, Kubelet
       shell: |
         sudo apt-get update
@@ -134,28 +135,29 @@
         sudo apt-get install -y kubelet=1.27.0-00 kubeadm=1.27.0-00 kubectl=1.27.0-00
 
         sudo apt-mark hold kubelet kubeadm kubectl
-
+  # Cài master node cho control plane
 - name: Install controlplane components
   hosts: control_plane
   gather_facts: true
   become: true
   tasks:
-    - name: Install controlplane components
+    - name: Install controlplane components for master node
       shell: |
         CONTROLPLANE_PRIVATE_IP=$(hostname -I | awk '{print $1}')
 
-        kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise-address $CONTROLPLANE_PRIVATE_IP --pod-network-cidr=10.244.0.0/16
+        sudo kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise-address=$CONTROLPLANE_PRIVATE_IP --pod-network-cidr=192.168.0.0/16
+        sudo mkdir -p /home/ubuntu/.kube
+        sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
+        sudo chown $(id -u):$(id -g) /home/ubuntu/.kube/config
 
-        # Copy kubeconfig to default location within controlplane nodes. Change to ROOR user to easily interact with cluster
+        sudo kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
 
-        mkdir -p $HOME/.kube
-        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+        sudo kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+        sleep 5
+      # Lấy kube init join token
+    - name: Get Kubeadm Token
+      command: sudo kubeadm token create --print-join-command
+      register: kubeadm_token_output
 
-        # Apply Networking Addons for Container Engine to assign Pod IP
-
-        kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml 
-
-        # Untaint controlplane node to allow workload deployment. By default, it blocks all pod scheduled on controlplane
-
-        kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+    - debug:
+        var: kubeadm_token_output.stdout_lines

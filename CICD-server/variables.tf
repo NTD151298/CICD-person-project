@@ -61,7 +61,7 @@ variable "ec2_jenkins" {
 }
 # Control plane EC2 machine type
 variable "ec2_control_plane" {
-  default     = "t2.large"
+  default     = "t2.medium"
   description = "Control plane ec2 instance type"
 }
 # Worker node EC2 machine type

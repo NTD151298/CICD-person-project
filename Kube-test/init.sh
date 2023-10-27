@@ -6,7 +6,7 @@ sudo kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise
 # Copy kubeconfig to default location within controlplane nodes. Change to ROOR user to easily interact with cluste
 sudo mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/confi
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # Apply Networking Addons for Container Engine to assign Pod I
 sudo kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml

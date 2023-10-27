@@ -2,7 +2,7 @@
 ssh -p 2001 duongtn1512@127.0.0.1 
 ssh -p 1000 a123@127.0.0.1 / pass 123
 ssh -i key/key5.pem ubuntu@54.169.45.89
-ssh -i key/key8.pem ubuntu@13.214.39.35
+ssh -i key/key8.pem ubuntu@54.251.158.150
 
 
 # Git
