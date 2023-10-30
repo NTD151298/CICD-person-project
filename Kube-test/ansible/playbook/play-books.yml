@@ -44,6 +44,7 @@
     - name: Install Kubeadm, Kubectl, Kubelet
       shell: |
         sudo apt-get update
+
         sudo apt-get install -y apt-transport-https ca-certificates curl
 
         mkdir -p /etc/apt/keyrings
@@ -64,6 +65,7 @@
       template:
         src: /home/duongtn1512/CICD-person-project/Kube-test/init.sh
         dest: /home/ubuntu/init.sh
+
 - name: Install controlplane components
   hosts: control_plane
   gather_facts: true

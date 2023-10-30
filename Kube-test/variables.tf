@@ -25,7 +25,7 @@ variable "ansible_host_path" {
 }
 # Ansible command
 variable "ansible_command" {
-  default     = "./ansible/playbook/play-books.yml"
+  default     = "./ansible/playbook/play-books2.yml"
   description = "Command for container lab hosts"
 }
 
