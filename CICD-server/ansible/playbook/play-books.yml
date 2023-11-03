@@ -39,7 +39,7 @@
 
         services:
           jenkins:
-            image: duongtn1512/jenkins_docker:v1
+            image: duongtn1512/jenkins_docker:v2
             container_name: jenkins
             ports:
               - "8080:8080"

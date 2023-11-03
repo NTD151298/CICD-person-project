@@ -1,8 +1,12 @@
 # SSH 
 ssh -p 2001 duongtn1512@127.0.0.1 
 ssh -p 1000 a123@127.0.0.1 / pass 123
-ssh -i key/key5.pem ubuntu@54.169.45.89
-ssh -i key/key8.pem ubuntu@54.254.150.236
+# Worker
+ssh -i key/key1.pem ubuntu@13.212.174.243
+# Jenkins
+ssh -i key/key5.pem ubuntu@13.212.5.114
+# Master
+ssh -i key/key8.pem ubuntu@54.254.6.133
 
 
 # Git
@@ -52,9 +56,7 @@ Control-plane-CD
 Worker-node-CD
 
 # K8s
-
 Your Kubernetes control-plane has initialized successfully!
-
 To start using your cluster, you need to run the following as a regular user:
 
   mkdir -p $HOME/.kube
@@ -62,9 +64,7 @@ To start using your cluster, you need to run the following as a regular user:
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 Alternatively, if you are the root user, you can run:
-
   export KUBECONFIG=/etc/kubernetes/admin.conf
-
 sudo kubectl get componentstatuses --kubeconfig=/etc/kubernetes/admin.conf
 # check coreDNS
 sudo kubectl get pods -n kube-system --kubeconfig=/etc/kubernetes/admin.conf

@@ -1,22 +1,22 @@
 #  VPC
-resource "aws_vpc" "lap" {
+resource "aws_vpc" "cicd" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "Lap-fianl-Vpc"
+    Name = "CICD-Vpc"
   }
 }
 #  Public subnet
 resource "aws_subnet" "public" {
-  vpc_id                  = aws_vpc.lap.id
+  vpc_id                  = aws_vpc.cicd.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
   tags = {
-    Name = "Lap-fianl-Subnet"
+    Name = "CICD-Subnet-public"
   }
 }
 #  NACL tường lửa cho subnet
 resource "aws_network_acl" "allow_all" {
-  vpc_id     = aws_vpc.lap.id
+  vpc_id     = aws_vpc.cicd.id
   subnet_ids = [aws_subnet.public.id]
   egress {
     rule_no    = 100
@@ -36,33 +36,33 @@ resource "aws_network_acl" "allow_all" {
   }
 }
 #  Internet gateway
-resource "aws_internet_gateway" "lap" {
-  vpc_id = aws_vpc.lap.id
+resource "aws_internet_gateway" "cicd" {
+  vpc_id = aws_vpc.cicd.id
   tags = {
-    Name = "Lap-fianl-Gate"
+    Name = "CICD-Gate"
   }
 }
 #  Route table
-resource "aws_route_table" "lap" {
-  vpc_id = aws_vpc.lap.id
+resource "aws_route_table" "cicd" {
+  vpc_id = aws_vpc.cicd.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.lap.id
+    gateway_id = aws_internet_gateway.cicd.id
   }
   tags = {
-    Name = "Lap-fianl-Route"
+    Name = "CICD-Route"
   }
 }
 #  Map route table to subnet
 resource "aws_route_table_association" "PubToInt" {
   subnet_id      = aws_subnet.public.id
-  route_table_id = aws_route_table.lap.id
+  route_table_id = aws_route_table.cicd.id
 }
 #  Security Group
 resource "aws_security_group" "final" {
-  vpc_id      = aws_vpc.lap.id
+  vpc_id      = aws_vpc.cicd.id
   name        = "CICD-sg"
-  description = "Security group create for final lap"
+  description = "Security group create for tested cicd server"
   ingress {
     description      = "SSH"
     from_port        = 22
