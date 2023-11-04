@@ -1,0 +1,33 @@
+# Cài master node cho control plane
+- name: Install controlplane components
+  hosts: control_plane
+  gather_facts: true
+  become: true
+  tasks:
+    # Copy các examp config k8s vào control plane
+    - name: Copy data directory to control plane EC2
+      synchronize:
+        src: ./data # nguồn
+        dest: /home/ubuntu/data-examp # đích đến
+        mode: push # copy từ nguồn local
+      delegate_to: localhost
+    - name: Install controlplane components for master node
+      shell: |
+        CONTROLPLANE_PRIVATE_IP=$(hostname -I | awk '{print $1}')
+
+        sudo kubeadm init --apiserver-cert-extra-sans=controlplane --apiserver-advertise-address=$CONTROLPLANE_PRIVATE_IP --pod-network-cidr=192.168.0.0/16
+        sudo mkdir -p /home/ubuntu/.kube
+        sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
+        sudo chown $(id -u):$(id -g) /home/ubuntu/.kube/config
+
+        sudo kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+
+        sudo kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+        sleep 5
+      # Lấy kube init join token
+    - name: Get Kubeadm Token
+      command: sudo kubeadm token create --print-join-command
+      register: kubeadm_token_output
+
+    - debug:
+        var: kubeadm_token_output.stdout_lines

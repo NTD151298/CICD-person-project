@@ -22,4 +22,12 @@ output "Worker_node-public_ip" {
 output "Worker_node_private_ip" {
   value = aws_instance.worker_node.*.private_ip
 }
+# In ra địa chỉ công khai của máy chủ monitor
+output "Monitor-public_ip" {
+  value = aws_instance.monitor.*.public_ip
+}
+# In ra địa chỉ riêng tư của máy chủ monitor
+output "Monitor_private_ip" {
+  value = aws_instance.monitor.*.private_ip
+}
 

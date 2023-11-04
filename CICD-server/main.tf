@@ -9,7 +9,7 @@ resource "aws_instance" "jenkins" {
   instance_type = var.ec2_jenkins               # Instance type của tôi
   key_name      = aws_key_pair.jenkins.key_name # Key pair của tôi
   tags = {
-    Name = "Jenkins-CI"
+    Name = "Jenkins"
   }
 }
 # Tạo máy chủ EC2-control-plane
@@ -18,7 +18,7 @@ resource "aws_instance" "control_plane" {
   instance_type = var.ec2_control_plane               # Instance type của tôi
   key_name      = aws_key_pair.control_plane.key_name # Key pair của tôi
   tags = {
-    Name = "Control-plane-CD"
+    Name = "Control-plane"
   }
 }
 # Tạo máy chủ EC2-worker-node
@@ -27,7 +27,16 @@ resource "aws_instance" "worker_node" {
   instance_type = var.ec2_worker_node               # Instance type của tôi
   key_name      = aws_key_pair.worker_node.key_name # Key pair của tôi
   tags = {
-    Name = "Worker-node-CD"
+    Name = "Worker-node"
+  }
+}
+# Tạo máy chủ EC2-monitor
+resource "aws_instance" "monitor" {
+  ami           = var.ec2_aim                   # AMI ID của Ubuntu
+  instance_type = var.ec2_monitor               # Instance type của tôi
+  key_name      = aws_key_pair.monitor.key_name # Key pair của tôi
+  tags = {
+    Name = "Monitor"
   }
 }
 
