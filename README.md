@@ -1,6 +1,5 @@
 # CICD-person-project
-A small personal project to containerization application and deploy it to k8s server on ec2 aws instance 
-using jenkins pipeline
+"A small personal project to create infrastructure as code using Terraform and configuration as code using Ansible to provision AWS cloud resource."
 
 # Deploy 4 ec2 instance using terraform
 - jenkins
