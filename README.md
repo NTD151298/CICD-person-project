@@ -8,8 +8,8 @@
 - monitor
 
 # Terraform then trigger ansible to config those 4 instance
-- install docker engine for 3 server
-- run jenkins container that using docker daemon from docker host for docker command
+- install docker engine for 4 server
+- run jenkins container that using docker daemon from docker host 
 - install kubelet, kubectl, kubeadm for master and worker node, config networking
 - kubeadm init creating master node on control-plane server 
 - run monitoring server with gafana and prometheus

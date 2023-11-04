@@ -62,6 +62,11 @@ variable "ansible_host_path" {
   description = "path to ansible inventory host"
   default     = "./ansible/inventory/lap"
 }
+# Ansible run docker command
+variable "ansible_docker_command" {
+  default     = "./ansible/playbook/play-books-docker.yml"
+  description = "Command for install docker at all host"
+}
 # Ansible run jenkins command
 variable "ansible_jenkins_command" {
   default     = "./ansible/playbook/play-books-jenkins.yml"

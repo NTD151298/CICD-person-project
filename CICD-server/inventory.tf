@@ -24,6 +24,19 @@ resource "local_file" "ansible_inventory" {
     
   EOT
 }
+# Kích hoạt cho ansible cài docker engine cho tất cả cicd server
+resource "null_resource" "docker_playbook" {
+  triggers = {
+    key = uuid()
+  }
+  provisioner "local-exec" {
+    command = <<EOF
+      ansible-playbook ${var.ansible_docker_command} -i ${var.ansible_host_path}
+      EOF
+  }
+  depends_on = [aws_instance.monitor, aws_instance.control_plane, aws_instance.worker_node, aws_instance.jenkins, local_file.ansible_inventory]
+}
+
 # Kích hoạt cho ansible chạy jenkins_playbook với jenkins servers ip mới lấy được
 resource "null_resource" "jenkins_playbook" {
   triggers = {
