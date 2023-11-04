@@ -11,6 +11,7 @@
         dest: /home/ubuntu/data-examp # đích đến
         mode: push # copy từ nguồn local
       delegate_to: localhost
+    # Kubeadm init
     - name: Install controlplane components for master node
       shell: |
         CONTROLPLANE_PRIVATE_IP=$(hostname -I | awk '{print $1}')
@@ -28,6 +29,6 @@
     - name: Get Kubeadm Token
       command: sudo kubeadm token create --print-join-command
       register: kubeadm_token_output
-
+      # In ra kubeadm token sử dụng cho worker node
     - debug:
         var: kubeadm_token_output.stdout_lines
