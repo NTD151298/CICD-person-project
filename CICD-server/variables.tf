@@ -72,7 +72,7 @@ variable "ansible_jenkins_command" {
   default     = "./ansible/playbook/play-books-jenkins.yml"
   description = "Command for install jenkins server"
 }
-# Ansible run comman command
+# Ansible run common command
 variable "ansible_common_command" {
   default     = "./ansible/playbook/play-books-common.yml"
   description = "Command for install commons for master and worker node"

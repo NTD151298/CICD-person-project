@@ -29,7 +29,6 @@
     # Chạy jenkins container bằng cái file docker compoes được viết trước đó
     - name: Run jenkins container
       shell: |
-        sudo chmod 777 /var/run/docker.sock
         docker-compose -f /home/ubuntu/compose.yaml up -d
 
     # Ngủ khoảng 15s
