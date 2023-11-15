@@ -24,68 +24,16 @@ resource "local_file" "ansible_inventory" {
     
   EOT
 }
-# Kích hoạt cho ansible cài docker engine cho tất cả cicd server
+# Kích hoạt cho ansible cài các công cụ cần thiết cho 4 server
 resource "null_resource" "docker_playbook" {
   triggers = {
     key = uuid()
   }
   provisioner "local-exec" {
     command = <<EOF
-      ansible-playbook ${var.ansible_docker_command} -i ${var.ansible_host_path}
+      ansible-playbook ${var.ansible_all_command} -i ${var.ansible_host_path}
       EOF
   }
   depends_on = [aws_instance.monitor, aws_instance.control_plane, aws_instance.worker_node, aws_instance.jenkins, local_file.ansible_inventory]
-}
-
-# Kích hoạt cho ansible chạy jenkins_playbook với jenkins servers ip mới lấy được
-resource "null_resource" "jenkins_playbook" {
-  triggers = {
-    key = uuid()
-  }
-  provisioner "local-exec" {
-    command = <<EOF
-      ansible-playbook ${var.ansible_jenkins_command} -i ${var.ansible_host_path}
-      EOF
-  }
-  depends_on = [aws_instance.jenkins, local_file.ansible_inventory]
-}
-
-# Kích hoạt cho ansible chạy playbook cài kubeadm kubelet và kubectl cho control plane và worker servers
-resource "null_resource" "common_nodes_playbook" {
-  triggers = {
-    key = uuid()
-  }
-  provisioner "local-exec" {
-    command = <<EOF
-      ansible-playbook ${var.ansible_common_command} -i ${var.ansible_host_path}
-      EOF
-  }
-  depends_on = [aws_instance.control_plane, aws_instance.worker_node, local_file.ansible_inventory]
-}
-
-# Kích hoạt cho ansible chạy playbook cài cluster với control plane server ip mới lấy được
-resource "null_resource" "master_playbook" {
-  triggers = {
-    key = uuid()
-  }
-  provisioner "local-exec" {
-    command = <<EOF
-      ansible-playbook ${var.ansible_master_command} -i ${var.ansible_host_path}
-      EOF
-  }
-  depends_on = [aws_instance.control_plane, local_file.ansible_inventory]
-}
-
-# Kích hoạt cho ansible chạy playbook cài monitor server với monitor ip mới lấy được
-resource "null_resource" "master_playbook" {
-  triggers = {
-    key = uuid()
-  }
-  provisioner "local-exec" {
-    command = <<EOF
-      ansible-playbook ${var.ansible_monitor_command} -i ${var.ansible_host_path}
-      EOF
-  }
-  depends_on = [aws_instance.monitor, local_file.ansible_inventory]
 }
 

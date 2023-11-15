@@ -87,6 +87,11 @@ variable "ansible_monitor_command" {
   default     = "./ansible/playbook/play-books-monitorning.yml"
   description = "Command for install monitorning server"
 }
+# Ansible run all command
+variable "ansible_all_command" {
+  default     = "./ansible/playbook/play-books-all.yml"
+  description = "Command for install for all server"
+}
 # Jenkins EC2 machine type
 variable "ec2_jenkins" {
   default     = "t2.micro"

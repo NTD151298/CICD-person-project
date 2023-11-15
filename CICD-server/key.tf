@@ -15,6 +15,6 @@ resource "aws_key_pair" "worker_node" {
 }
 # Key pair của Monitor
 resource "aws_key_pair" "monitor" {
-  key_name   = "worker-node-key"                  # Tên key pair 
+  key_name   = "monitor-key"                      # Tên key pair 
   public_key = file("./key/monitor-key/key9.pub") # Đường dẫn đến file public key
 }
