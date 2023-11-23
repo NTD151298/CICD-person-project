@@ -7,8 +7,8 @@ sudo chmod 600 CICD-server/key/worker-key/key1.pem
 sudo chmod 600 CICD-server/key/jenkins-key/key5.pem
 sudo chmod 600 CICD-server/key/master-key/key8.pem
 sudo chmod 600 CICD-server/key/monitor-key/key9.pem
-sudo chmod 600 Kubeadm/key/key1.pem
-sudo chmod 600 Kubeadm/key/key8.pem
+sudo chmod 600 Kubeadm/key/worker-key/key1.pem
+sudo chmod 600 Kubeadm/key/master-key/key8.pem
 
 # Terraform install
 sudo apt update 
