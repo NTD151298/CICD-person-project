@@ -20,3 +20,6 @@ terraform.tfstate.backup
 .terraform.lock.hcl
 .terraform/
 
+# ALL keyfile
+*.pem
+*.pub
