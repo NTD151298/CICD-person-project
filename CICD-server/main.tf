@@ -39,7 +39,6 @@ resource "aws_instance" "monitor" {
     Name = "Monitor"
   }
 }
-
 # Nếu có thêm vpc subnet sg và iam thì thêm 3 dòng này vào máy chủ EC2
 # iam_instance_profile   = aws_iam_instance_profile.last.name
 # subnet_id              = aws_subnet.public.id # Sub net của tôi

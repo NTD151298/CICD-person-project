@@ -11,7 +11,7 @@ resource "local_file" "ansible_inventory" {
     %{for ip in aws_instance.control_plane.*.public_ip~} 
     ${ip} ansible_host=${ip} ansible_user=${var.ansible_user} ansible_ssh_private_key_file=${var.control_plane_ssh_private_key_file} ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_connection=ssh 
     %{endfor~}
-    
+
     [worker_node]
     %{for ip in aws_instance.worker_node.*.public_ip~} 
     ${ip} ansible_host=${ip} ansible_user=${var.ansible_user} ansible_ssh_private_key_file=${var.worker_node_ssh_private_key_file} ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_ssh_connection=ssh 

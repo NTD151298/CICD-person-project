@@ -123,12 +123,12 @@
   become: true
   tasks:
     # Copy các examp config k8s vào control plane
-    - name: Copy data directory to control plane EC2
-      synchronize:
-        src: ./data # nguồn
-        dest: /home/ubuntu/data-examp # đích đến
-        mode: push # copy từ nguồn local
-      delegate_to: localhost
+    # - name: Copy data directory to control plane EC2
+    #   synchronize:
+    #     src: ./data # nguồn
+    #     dest: /home/ubuntu/data-examp # đích đến
+    #     mode: copy # copy từ nguồn local
+    #   delegate_to: localhost
     # Kubeadm init
     - name: Install controlplane components for master node
       shell: |
