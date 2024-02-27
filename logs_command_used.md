@@ -1,10 +1,13 @@
 # SSH 
 ssh -p 2001 duongtn1512@127.0.0.1 
+ssh -p 2001 -i VM-box/ansible2key.pem duongtn1512@127.0.0.1
+ssh -p 2002 duongnt@127.0.0.1 / pass 123
 ssh -p 1000 a123@127.0.0.1 / pass 123
 # Worker
 ssh -i key/key1.pem ubuntu@13.212.174.243
 # Jenkins
 ssh -i key/key5.pem ubuntu@13.212.5.114
+ssh -i key/jenkins-key.pem ubuntu@52.77.241.153
 # Master
 ssh -i key/key8.pem ubuntu@54.254.6.133
 
@@ -35,11 +38,17 @@ aws configure list
 aws configure 
 
 # Teraform
+terraform fmt
 terraform init
 terraform apply --auto-approve
 terraform destroy --auto-approve
 terraform plan
 terraform validate
+terraform show
+terraform state list
+
+terraform init -upgrade
+
 
 # Ansible install
 sudo apt update 
