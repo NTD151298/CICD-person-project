@@ -16,8 +16,8 @@
 
 # To visualize project work flow  
 - CICD-server
-![alt text](https://raw.githubusercontent.com/NTD151298/RandomQuoteApp/main/Visualizer/CICD-server.png)
+![alt text](https://raw.githubusercontent.com/NTD151298/CICD-person-project/main/Visualizer/CICD-server.png)
 - Jenkins-server
-![alt text](https://raw.githubusercontent.com/NTD151298/RandomQuoteApp/main/Visualizer/Jenkins.png)
+![alt text](https://raw.githubusercontent.com/NTD151298/CICD-person-project/main/Visualizer/Jenkins.png)
 - KubeADM-server
-![alt text](https://raw.githubusercontent.com/NTD151298/RandomQuoteApp/main/Visualizer/KubeADM.png)
+![alt text](https://raw.githubusercontent.com/NTD151298/CICD-person-project/main/Visualizer/KubeADM.png)
