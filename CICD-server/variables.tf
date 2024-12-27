@@ -4,6 +4,8 @@ variable "ansible_user" {
   description = "Ansible user used to connect to the instance"
   default     = "ubuntu"
 }
+
+# Key
 # Jenkins key
 variable "jenkins_ssh_private_key_file" {
   type        = string
@@ -56,12 +58,16 @@ variable "monitor_ssh_public_key_file" {
   description = "ssh public key in monitor server authorized_keys"
   default     = "./key/monitor-key/key9.pub"
 }
+
+# Path for Ansible
 # Ansible host path
 variable "ansible_host_path" {
   type        = string
   description = "path to ansible inventory host"
   default     = "./ansible/inventory/lap"
 }
+
+# Ansible run commands
 # Ansible run docker command
 variable "ansible_docker_command" {
   default     = "./ansible/playbook/play-books-docker.yml"
@@ -92,6 +98,8 @@ variable "ansible_all_command" {
   default     = "./ansible/playbook/play-books-all.yml"
   description = "Command for install for all server"
 }
+
+# Machine types
 # Jenkins EC2 machine type
 variable "ec2_jenkins" {
   default     = "t2.micro"
@@ -112,6 +120,21 @@ variable "ec2_monitor" {
   default     = "t2.micro"
   description = "Monitor server ec2 instance type"
 }
+
+# EBS type
+# Sc1
+variable "chepest_ebs" {
+  type = string
+  default = "sc1"
+  description = "Cold HDD 0.015$ 250IOPS 250 MB/s"
+}
+# Gp3
+variable "basic_test_ebs" {
+  type = string
+  default = "gp3"
+  description = "SSD 0.08$ 3000IOPS 125MB/s"
+}
+
 # Ec2 amazone image machine AIM ubuntu
 variable "ec2_aim" {
   default     = "ami-0df7a207adb9748c7"

@@ -44,7 +44,7 @@
         version: "3"
         services:
           jenkins:
-            image: duongtn1512/jenkins_docker:v4
+            image: duongtn1512/jenkins_docker:v3
             container_name: jenkins
             ports:
               - "8080:8080"
